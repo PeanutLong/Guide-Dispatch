@@ -28,30 +28,7 @@
 - 当前登录讲解员个人信息获取
 - 负载均衡任务智能分配（防止单讲解员过载）
 
-## 部分接口文档
-
-### 1. 讲解员调度记录（GuideScheduleController）
-
-| 接口路径                  | 请求方式 | 功能描述             |
-|---------------------------|----------|----------------------|
-| `/schedule/myTaskList`    | GET      | 获取当前讲解员的任务列表 |
-| `/schedule/historyTaskList` | GET    | 获取当前讲解员的历史任务列表 |
-| `/schedule/acceptTask`    | POST     | 讲解员接单           |
-| `/schedule/completeTask`  | POST     | 讲解员完成任务       |
-
-### 2. 讲解员排班（GuideWorkShiftController）
-
-| 接口路径           | 请求方式 | 功能描述               |
-|--------------------|----------|------------------------|
-| `/shift/myList`    | GET      | 获取当前讲解员的排班列表 |
-
-### 3. 讲解员信息（TourGuideController）
-
-| 接口路径           | 请求方式 | 功能描述                     |
-|--------------------|----------|------------------------------|
-| `/guide/current`   | GET      | 获取当前登录讲解员的基本信息 |
-
-> **说明**：以上为当前已实现的**部分核心接口**，完整接口文档请访问项目启动后的 Swagger UI
+<image-card alt="系统登录界面" src="./images/login.png" ></image-card>
 
 ## 快速开始
 
