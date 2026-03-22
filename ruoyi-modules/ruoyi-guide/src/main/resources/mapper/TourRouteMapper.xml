@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.guide.mapper.TourRouteMapper">
+    
+    <resultMap type="TourRoute" id="TourRouteResult">
+        <result property="routeId"    column="route_id"    />
+        <result property="routeName"    column="route_name"    />
+        <result property="routeCode"    column="route_code"    />
+        <result property="durationMinutes"    column="duration_minutes"    />
+        <result property="touristCapacity"    column="tourist_capacity"    />
+        <result property="languageSupport"    column="language_support"    />
+        <result property="status"    column="status"    />
+        <result property="sort"    column="sort"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+
+    <sql id="selectTourRouteVo">
+        select route_id, route_name, route_code, duration_minutes, tourist_capacity, language_support, status, sort, create_by, create_time, update_by, update_time, remark, del_flag from tour_route
+    </sql>
+
+    <select id="selectTourRouteList" parameterType="TourRoute" resultMap="TourRouteResult">
+        <include refid="selectTourRouteVo"/>
+        <where>  
+            <if test="routeName != null  and routeName != ''"> and route_name like concat('%', #{routeName}, '%')</if>
+            <if test="routeCode != null  and routeCode != ''"> and route_code = #{routeCode}</if>
+            <if test="durationMinutes != null "> and duration_minutes = #{durationMinutes}</if>
+            <if test="touristCapacity != null "> and tourist_capacity = #{touristCapacity}</if>
+            <if test="languageSupport != null  and languageSupport != ''"> and language_support = #{languageSupport}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="sort != null "> and sort = #{sort}</if>
+        </where>
+    </select>
+    
+    <select id="selectTourRouteByRouteId" parameterType="Long" resultMap="TourRouteResult">
+        <include refid="selectTourRouteVo"/>
+        where route_id = #{routeId}
+    </select>
+
+    <insert id="insertTourRoute" parameterType="TourRoute" useGeneratedKeys="true" keyProperty="routeId">
+        insert into tour_route
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="routeName != null and routeName != ''">route_name,</if>
+            <if test="routeCode != null">route_code,</if>
+            <if test="durationMinutes != null">duration_minutes,</if>
+            <if test="touristCapacity != null">tourist_capacity,</if>
+            <if test="languageSupport != null">language_support,</if>
+            <if test="status != null">status,</if>
+            <if test="sort != null">sort,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="delFlag != null">del_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="routeName != null and routeName != ''">#{routeName},</if>
+            <if test="routeCode != null">#{routeCode},</if>
+            <if test="durationMinutes != null">#{durationMinutes},</if>
+            <if test="touristCapacity != null">#{touristCapacity},</if>
+            <if test="languageSupport != null">#{languageSupport},</if>
+            <if test="status != null">#{status},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTourRoute" parameterType="TourRoute">
+        update tour_route
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="routeName != null and routeName != ''">route_name = #{routeName},</if>
+            <if test="routeCode != null">route_code = #{routeCode},</if>
+            <if test="durationMinutes != null">duration_minutes = #{durationMinutes},</if>
+            <if test="touristCapacity != null">tourist_capacity = #{touristCapacity},</if>
+            <if test="languageSupport != null">language_support = #{languageSupport},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+        </trim>
+        where route_id = #{routeId}
+    </update>
+
+    <delete id="deleteTourRouteByRouteId" parameterType="Long">
+        delete from tour_route where route_id = #{routeId}
+    </delete>
+
+    <delete id="deleteTourRouteByRouteIds" parameterType="String">
+        delete from tour_route where route_id in 
+        <foreach item="routeId" collection="array" open="(" separator="," close=")">
+            #{routeId}
+        </foreach>
+    </delete>
+</mapper>

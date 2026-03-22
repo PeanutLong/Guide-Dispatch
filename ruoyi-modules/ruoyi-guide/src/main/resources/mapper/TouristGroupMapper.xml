@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.guide.mapper.TouristGroupMapper">
+
+    <resultMap type="TouristGroup" id="TouristGroupResult">
+        <result property="groupId"    column="group_id"    />
+        <result property="groupCode"    column="group_code"    />
+        <result property="touristCount"    column="tourist_count"    />
+        <result property="arrivalTime"    column="arrival_time"    />
+        <result property="departureTime"    column="departure_time"    />
+        <result property="languagePreference"    column="language_preference"    />
+        <result property="routeId"    column="route_id"    />
+        <result property="pointId"    column="point_id"    />
+        <result property="status"    column="status"    />
+        <result property="assignedGuideId"    column="assigned_guide_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+
+    <sql id="selectTouristGroupVo">
+        select group_id, group_code, tourist_count, arrival_time, departure_time, language_preference, route_id, point_id, status, assigned_guide_id, create_by, create_time, update_by, update_time, remark, del_flag from tourist_group
+    </sql>
+
+    <select id="selectTouristGroupList" parameterType="TouristGroup" resultMap="TouristGroupResult">
+        <include refid="selectTouristGroupVo"/>
+        <where>
+            <if test="groupCode != null  and groupCode != ''"> and group_code = #{groupCode}</if>
+            <if test="touristCount != null "> and tourist_count = #{touristCount}</if>
+            <if test="arrivalTime != null "> and arrival_time = #{arrivalTime}</if>
+            <if test="departureTime != null "> and departure_time = #{departureTime}</if>
+            <if test="languagePreference != null  and languagePreference != ''"> and language_preference = #{languagePreference}</if>
+            <if test="routeId != null "> and route_id = #{routeId}</if>
+            <if test="pointId != null "> and point_id = #{pointId}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="assignedGuideId != null "> and assigned_guide_id = #{assignedGuideId}</if>
+        </where>
+    </select>
+
+    <select id="selectTouristGroupByGroupId" parameterType="Long" resultMap="TouristGroupResult">
+        <include refid="selectTouristGroupVo"/>
+        where group_id = #{groupId}
+    </select>
+
+    <insert id="insertTouristGroup" parameterType="TouristGroup" useGeneratedKeys="true" keyProperty="groupId">
+        insert into tourist_group
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="groupCode != null and groupCode != ''">group_code,</if>
+            <if test="touristCount != null">tourist_count,</if>
+            <if test="arrivalTime != null">arrival_time,</if>
+            <if test="departureTime != null">departure_time,</if>
+            <if test="languagePreference != null">language_preference,</if>
+            <if test="routeId != null">route_id,</if>
+            <if test="pointId != null">point_id,</if>
+            <if test="status != null">status,</if>
+            <if test="assignedGuideId != null">assigned_guide_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="delFlag != null">del_flag,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="groupCode != null and groupCode != ''">#{groupCode},</if>
+            <if test="touristCount != null">#{touristCount},</if>
+            <if test="arrivalTime != null">#{arrivalTime},</if>
+            <if test="departureTime != null">#{departureTime},</if>
+            <if test="languagePreference != null">#{languagePreference},</if>
+            <if test="routeId != null">#{routeId},</if>
+            <if test="pointId != null">#{pointId},</if>
+            <if test="status != null">#{status},</if>
+            <if test="assignedGuideId != null">#{assignedGuideId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+        </trim>
+    </insert>
+
+    <update id="updateTouristGroup" parameterType="TouristGroup">
+        update tourist_group
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="groupCode != null and groupCode != ''">group_code = #{groupCode},</if>
+            <if test="touristCount != null">tourist_count = #{touristCount},</if>
+            <if test="arrivalTime != null">arrival_time = #{arrivalTime},</if>
+            <if test="departureTime != null">departure_time = #{departureTime},</if>
+            <if test="languagePreference != null">language_preference = #{languagePreference},</if>
+            <if test="routeId != null">route_id = #{routeId},</if>
+            <if test="pointId != null">point_id = #{pointId},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="assignedGuideId != null">assigned_guide_id = #{assignedGuideId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+        </trim>
+        where group_id = #{groupId}
+    </update>
+
+    <delete id="deleteTouristGroupByGroupId" parameterType="Long">
+        delete from tourist_group where group_id = #{groupId}
+    </delete>
+
+    <delete id="deleteTouristGroupByGroupIds" parameterType="String">
+        delete from tourist_group where group_id in
+        <foreach item="groupId" collection="array" open="(" separator="," close=")">
+            #{groupId}
+        </foreach>
+    </delete>
+</mapper>

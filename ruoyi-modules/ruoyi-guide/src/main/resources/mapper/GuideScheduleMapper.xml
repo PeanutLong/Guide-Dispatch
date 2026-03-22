@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.guide.mapper.GuideScheduleMapper">
+    
+    <resultMap type="GuideSchedule" id="GuideScheduleResult">
+        <result property="scheduleId"    column="schedule_id"    />
+        <result property="guideId"    column="guide_id"    />
+        <result property="groupId"    column="group_id"    />
+        <result property="assignTime"    column="assign_time"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="loadCount"    column="load_count"    />
+        <result property="status"    column="status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+
+    <sql id="selectGuideScheduleVo">
+        select schedule_id, guide_id, group_id, assign_time, start_time, end_time, load_count, status, create_by, create_time, update_by, update_time, remark, del_flag from guide_schedule
+    </sql>
+
+    <select id="selectGuideScheduleList" parameterType="GuideSchedule" resultMap="GuideScheduleResult">
+        <include refid="selectGuideScheduleVo"/>
+        <where>  
+            <if test="guideId != null "> and guide_id = #{guideId}</if>
+            <if test="groupId != null "> and group_id = #{groupId}</if>
+            <if test="assignTime != null "> and assign_time = #{assignTime}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="loadCount != null "> and load_count = #{loadCount}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectGuideScheduleByScheduleId" parameterType="Long" resultMap="GuideScheduleResult">
+        <include refid="selectGuideScheduleVo"/>
+        where schedule_id = #{scheduleId}
+    </select>
+
+    <insert id="insertGuideSchedule" parameterType="GuideSchedule" useGeneratedKeys="true" keyProperty="scheduleId">
+        insert into guide_schedule
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="guideId != null">guide_id,</if>
+            <if test="groupId != null">group_id,</if>
+            <if test="assignTime != null">assign_time,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="loadCount != null">load_count,</if>
+            <if test="status != null">status,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="delFlag != null">del_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="guideId != null">#{guideId},</if>
+            <if test="groupId != null">#{groupId},</if>
+            <if test="assignTime != null">#{assignTime},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="loadCount != null">#{loadCount},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateGuideSchedule" parameterType="GuideSchedule">
+        update guide_schedule
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="guideId != null">guide_id = #{guideId},</if>
+            <if test="groupId != null">group_id = #{groupId},</if>
+            <if test="assignTime != null">assign_time = #{assignTime},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="loadCount != null">load_count = #{loadCount},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+        </trim>
+        where schedule_id = #{scheduleId}
+    </update>
+
+    <delete id="deleteGuideScheduleByScheduleId" parameterType="Long">
+        delete from guide_schedule where schedule_id = #{scheduleId}
+    </delete>
+
+    <delete id="deleteGuideScheduleByScheduleIds" parameterType="String">
+        delete from guide_schedule where schedule_id in 
+        <foreach item="scheduleId" collection="array" open="(" separator="," close=")">
+            #{scheduleId}
+        </foreach>
+    </delete>
+
+    <select id="selectTaskListByGuideId" parameterType="Long" resultType="com.ruoyi.guide.domain.vo.GuideTaskVo">
+        SELECT
+            tg.group_code AS groupCode,
+            tg.tourist_count AS touristCount,
+            tg.language_preference AS languagePreference,
+            mp.point_name AS meetingPointName,
+            gs.start_time AS expectedStartTime,
+            tr.route_name AS routeName,
+            gs.status AS status
+        FROM guide_schedule gs
+                 LEFT JOIN tourist_group tg ON gs.group_id = tg.group_id
+                 LEFT JOIN meeting_point mp ON tg.point_id = mp.point_id
+                 LEFT JOIN tour_route tr ON tg.route_id = tr.route_id
+        WHERE gs.guide_id = #{guideId}
+          AND gs.del_flag = '0'
+          AND DATE(gs.start_time) = CURDATE()
+        ORDER BY gs.start_time ASC
+    </select>
+
+    <select id="selectHistoryTaskListByGuideId" parameterType="Long" resultType="com.ruoyi.guide.domain.vo.GuideTaskVo">
+        SELECT
+            tg.group_code AS groupCode,
+            tg.tourist_count AS touristCount,
+            tg.language_preference AS languagePreference,
+            mp.point_name AS meetingPointName,
+            gs.start_time AS expectedStartTime,
+            tr.route_name AS routeName,
+            gs.status AS status
+        FROM guide_schedule gs
+                 LEFT JOIN tourist_group tg ON gs.group_id = tg.group_id
+                 LEFT JOIN meeting_point mp ON tg.point_id = mp.point_id
+                 LEFT JOIN tour_route tr ON tg.route_id = tr.route_id
+        WHERE gs.guide_id = #{guideId}
+          AND gs.del_flag = '0'
+        ORDER BY gs.start_time ASC
+    </select>
+
+    <update id="acceptTask">
+        UPDATE guide_schedule gs
+            INNER JOIN tourist_group tg ON gs.group_id = tg.group_id
+            SET gs.status = '1'
+        WHERE gs.guide_id = #{guideId}
+          AND tg.group_code = #{groupCode}
+          AND gs.del_flag = '0'
+          AND gs.status = '0'
+          AND DATE(gs.start_time) = CURDATE()
+    </update>
+
+    <update id="completeTask">
+        UPDATE guide_schedule gs
+            INNER JOIN tourist_group tg ON gs.group_id = tg.group_id
+            SET gs.status = '3',
+                gs.end_time = #{endTime}
+        WHERE gs.guide_id = #{guideId}
+          AND tg.group_code = #{groupCode}
+          AND gs.del_flag = '0'
+          AND gs.status = '1'
+          AND DATE(gs.start_time) = CURDATE()
+    </update>
+</mapper>

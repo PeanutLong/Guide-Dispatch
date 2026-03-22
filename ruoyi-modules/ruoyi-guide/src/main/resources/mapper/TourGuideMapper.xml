@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.guide.mapper.TourGuideMapper">
+    
+    <resultMap type="TourGuide" id="TourGuideResult">
+        <result property="guideId"    column="guide_id"    />
+        <result property="guideName"    column="guide_name"    />
+        <result property="guideCode"    column="guide_code"    />
+        <result property="sex"    column="sex"    />
+        <result property="age"    column="age"    />
+        <result property="phone"    column="phone"    />
+        <result property="expertise"    column="expertise"    />
+        <result property="status"    column="status"    />
+        <result property="currentLoad"    column="current_load"    />
+        <result property="maxLoad"    column="max_load"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+
+    <sql id="selectTourGuideVo">
+        select guide_id, guide_name, guide_code, sex, age, phone, expertise, status, current_load, max_load, dept_id, create_by, create_time, update_by, update_time, remark, del_flag from tour_guide
+    </sql>
+
+    <select id="selectTourGuideList" parameterType="TourGuide" resultMap="TourGuideResult">
+        <include refid="selectTourGuideVo"/>
+        <where>  
+            <if test="guideName != null  and guideName != ''"> and guide_name like concat('%', #{guideName}, '%')</if>
+            <if test="guideCode != null  and guideCode != ''"> and guide_code = #{guideCode}</if>
+            <if test="sex != null  and sex != ''"> and sex = #{sex}</if>
+            <if test="age != null "> and age = #{age}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="expertise != null  and expertise != ''"> and expertise = #{expertise}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="currentLoad != null "> and current_load = #{currentLoad}</if>
+            <if test="maxLoad != null "> and max_load = #{maxLoad}</if>
+            <if test="deptId != null "> and dept_id = #{deptId}</if>
+        </where>
+    </select>
+    
+    <select id="selectTourGuideByGuideId" parameterType="Long" resultMap="TourGuideResult">
+        <include refid="selectTourGuideVo"/>
+        where guide_id = #{guideId}
+    </select>
+
+    <insert id="insertTourGuide" parameterType="TourGuide" useGeneratedKeys="true" keyProperty="guideId">
+        insert into tour_guide
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="guideName != null and guideName != ''">guide_name,</if>
+            <if test="guideCode != null">guide_code,</if>
+            <if test="sex != null">sex,</if>
+            <if test="age != null">age,</if>
+            <if test="phone != null">phone,</if>
+            <if test="expertise != null">expertise,</if>
+            <if test="status != null">status,</if>
+            <if test="currentLoad != null">current_load,</if>
+            <if test="maxLoad != null">max_load,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="delFlag != null">del_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="guideName != null and guideName != ''">#{guideName},</if>
+            <if test="guideCode != null">#{guideCode},</if>
+            <if test="sex != null">#{sex},</if>
+            <if test="age != null">#{age},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="expertise != null">#{expertise},</if>
+            <if test="status != null">#{status},</if>
+            <if test="currentLoad != null">#{currentLoad},</if>
+            <if test="maxLoad != null">#{maxLoad},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTourGuide" parameterType="TourGuide">
+        update tour_guide
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="guideName != null and guideName != ''">guide_name = #{guideName},</if>
+            <if test="guideCode != null">guide_code = #{guideCode},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="age != null">age = #{age},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="expertise != null">expertise = #{expertise},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="currentLoad != null">current_load = #{currentLoad},</if>
+            <if test="maxLoad != null">max_load = #{maxLoad},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+        </trim>
+        where guide_id = #{guideId}
+    </update>
+
+    <delete id="deleteTourGuideByGuideId" parameterType="Long">
+        delete from tour_guide where guide_id = #{guideId}
+    </delete>
+
+    <delete id="deleteTourGuideByGuideIds" parameterType="String">
+        delete from tour_guide where guide_id in 
+        <foreach item="guideId" collection="array" open="(" separator="," close=")">
+            #{guideId}
+        </foreach>
+    </delete>
+</mapper>
