@@ -11,8 +11,8 @@
 
 ## 技术栈
 
-| 类别       | 技术              |
-|------------|-------------------|
+| 类别       | 技术                  |
+|------------|-----------------------|
 | 后端框架   | Ruoyi（Spring Boot + MyBatis + Redis） |
 | 负载均衡   | 内置负载均衡调度算法（支持自定义扩展） |
 | 前端管理   | ruoyi-ui（Vue + Element UI） |
@@ -28,7 +28,22 @@
 - 当前登录讲解员个人信息获取
 - 负载均衡任务智能分配（防止单讲解员过载）
 
-<image-card alt="系统登录界面" src="./images/login.png" ></image-card>
+## 截图预览
+
+### 后台管理端（ruoyi-ui）
+
+| 功能           | 截图                             |
+|----------------|----------------------------------|
+| 系统登录页面   | ![登录页面](./images/login.png) |
+| 任务大厅/任务列表 | ![任务大厅](./images/taskhall.png) |
+| 历史任务记录   | ![历史任务](./images/historytask.png) |
+| 请假/休假申请  | ![请假页面](./images/leave.png) |
+| 个人信息       | ![用户中心](./images/user.png)  |
+| 排班/调度管理  | ![排班页面](./images/schedule.png) |
+
+<p align="center">
+  <em>以上为后台管理端主要界面截图，移动端（uni-app）界面可后续补充</em>
+</p>
 
 ## 快速开始
 
@@ -40,15 +55,19 @@
 - Maven 3.8+
 
 ### 2. 后端启动（ruoyi）
+
 ```bash
 # 克隆项目
 git clone https://github.com/your-repo/guide-schedule-system.git
 
+# 进入项目根目录
+cd guide-schedule-system
+
 # 进入后端目录
-cd guide-schedule-system/ruoyi
+cd ruoyi
 
-# 修改 application.yml 中的数据库、Redis 配置
+# 修改 application.yml 中的数据库、Redis 等配置
 
-# 启动
+# 构建 & 启动
 mvn clean install
 mvn spring-boot:run
