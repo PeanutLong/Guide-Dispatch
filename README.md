@@ -41,9 +41,7 @@
 | 个人信息       | ![用户中心](./images/user.png)  |
 | 排班/调度管理  | ![排班页面](./images/schedule.png) |
 
-<p align="center">
-  <em>以上为后台管理端主要界面截图，移动端（uni-app）界面可后续补充</em>
-</p>
+
 
 ## 快速开始
 
